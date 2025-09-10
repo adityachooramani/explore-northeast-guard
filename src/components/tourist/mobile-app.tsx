@@ -6,11 +6,18 @@ import { PanicButton } from "@/components/ui/panic-button";
 import { CheckInButton } from "@/components/tourist/check-in-button";
 import { AttractionsCarousel } from "@/components/tourist/attractions-carousel";
 import { StatusChip } from "@/components/ui/status-chip";
-import { User, Menu, Shield, Heart } from "lucide-react";
+import { FeatureTile } from "@/components/ui/feature-tile";
+import { MockMap } from "@/components/ui/mock-map";
+import { ProfileScreen } from "@/components/tourist/profile-screen";
+import { User, Menu, Shield, Heart, Car, Calendar, MapPin, Phone } from "lucide-react";
 import buddhaHero from "@/assets/buddha-hero.jpg";
 
 const MobileApp = () => {
-  const [currentView, setCurrentView] = useState<"splash" | "home">("splash");
+  const [currentView, setCurrentView] = useState<"splash" | "home" | "profile">("splash");
+
+  if (currentView === "profile") {
+    return <ProfileScreen onBack={() => setCurrentView("home")} />;
+  }
 
   if (currentView === "splash") {
     return (
@@ -51,7 +58,7 @@ const MobileApp = () => {
           </div>
           <div className="flex items-center gap-2">
             <StatusChip variant="ok">Safe Zone</StatusChip>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" onClick={() => setCurrentView("profile")}>
               <User className="h-5 w-5" />
             </Button>
           </div>
@@ -64,56 +71,48 @@ const MobileApp = () => {
       {/* Map Section */}
       <Card className="mx-4 mt-4 overflow-hidden">
         <CardContent className="p-0">
-          <div className="h-64 bg-gradient-to-br from-primary/10 to-accent/10 relative">
-            {/* Simulated map */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-4 h-4 bg-primary rounded-full animate-pulse mb-2 mx-auto"></div>
-                <p className="text-sm text-muted-foreground">Live Location</p>
-                <p className="text-xs text-muted-foreground mt-1">Guwahati, Assam</p>
-              </div>
-            </div>
-            
-            {/* Heatmap indicators */}
-            <div className="absolute top-4 left-4">
-              <div className="flex items-center gap-2 text-xs">
-                <div className="w-3 h-3 rounded-full bg-success/60"></div>
-                <span>Low Risk</span>
-              </div>
-            </div>
-            
-            {/* Safety score */}
-            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2">
-              <div className="flex items-center gap-2">
-                <Heart className="h-4 w-4 text-success" />
-                <span className="text-sm font-medium">Safety: 92%</span>
-              </div>
-            </div>
-          </div>
+          <MockMap />
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4 p-4">
-        <Card className="hover:shadow-card transition-all cursor-pointer">
-          <CardContent className="p-4 text-center">
-            <div className="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-2">
-              <Shield className="h-6 w-6 text-success" />
-            </div>
-            <h3 className="font-medium text-sm">Safety Tips</h3>
-            <p className="text-xs text-muted-foreground mt-1">Local guidelines</p>
-          </CardContent>
-        </Card>
-        
-        <Card className="hover:shadow-card transition-all cursor-pointer">
-          <CardContent className="p-4 text-center">
-            <div className="w-12 h-12 bg-info/10 rounded-full flex items-center justify-center mx-auto mb-2">
-              <User className="h-6 w-6 text-info" />
-            </div>
-            <h3 className="font-medium text-sm">Local Help</h3>
-            <p className="text-xs text-muted-foreground mt-1">Verified guides</p>
-          </CardContent>
-        </Card>
+      {/* Feature Grid */}
+      <div className="grid grid-cols-3 gap-2.5 p-4">
+        <FeatureTile 
+          icon={Shield} 
+          label="Safety Tips" 
+          variant="success" 
+          onClick={() => console.log("Safety Tips tapped")}
+        />
+        <FeatureTile 
+          icon={User} 
+          label="Local Help" 
+          variant="info" 
+          onClick={() => console.log("Local Help tapped")}
+        />
+        <FeatureTile 
+          icon={Car} 
+          label="Transport" 
+          variant="accent" 
+          onClick={() => console.log("Transport booking tapped")}
+        />
+        <FeatureTile 
+          icon={Calendar} 
+          label="Events" 
+          variant="warning" 
+          onClick={() => console.log("Events & Tickets tapped")}
+        />
+        <FeatureTile 
+          icon={MapPin} 
+          label="Explore" 
+          variant="primary" 
+          onClick={() => console.log("Explore tapped")}
+        />
+        <FeatureTile 
+          icon={Phone} 
+          label="Emergency" 
+          variant="destructive" 
+          onClick={() => console.log("Emergency tapped")}
+        />
       </div>
 
       {/* Attractions */}
