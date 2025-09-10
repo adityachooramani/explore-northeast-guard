@@ -57,11 +57,32 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Custom app colors
+        "brand-teal": "hsl(var(--brand-teal))",
+        "accent-saffron": "hsl(var(--accent-saffron))",
+        danger: "hsl(var(--danger))",
+        warning: "hsl(var(--warning))",
+        success: "hsl(var(--success))",
+        info: "hsl(var(--info))",
+        critical: "hsl(var(--critical))",
+        urgent: "hsl(var(--urgent))",
+        ok: "hsl(var(--ok))",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        "large": "var(--radius-large)",
+        "small": "var(--radius-small)",
+      },
+      boxShadow: {
+        "card": "var(--shadow-card)",
+        "emergency": "var(--shadow-emergency)",
+        "floating": "var(--shadow-floating)",
+      },
+      backgroundImage: {
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-emergency": "var(--gradient-emergency)",
       },
       keyframes: {
         "accordion-down": {
@@ -80,10 +101,48 @@ export default {
             height: "0",
           },
         },
+        "pulse-emergency": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.02)" },
+        },
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(10px)"
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)"
+          }
+        },
+        "slide-up": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(20px)"
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)"
+          }
+        },
+        "scale-in": {
+          "0%": {
+            transform: "scale(0.95)",
+            opacity: "0"
+          },
+          "100%": {
+            transform: "scale(1)",
+            opacity: "1"
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-emergency": "pulse-emergency 4s infinite",
+        "fade-in": "fade-in 0.3s ease-out",
+        "slide-up": "slide-up 0.3s ease-out",
+        "scale-in": "scale-in 0.2s ease-out",
       },
     },
   },
