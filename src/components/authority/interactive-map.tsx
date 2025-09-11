@@ -49,11 +49,15 @@ const InteractiveMap = ({
 }: InteractiveMapProps) => {
   const [activeMarker, setActiveMarker] = useState<string | null>(selectedMarkerId || null);
   const [demoTime, setDemoTime] = useState(new Date());
+  const [searchQuery, setSearchQuery] = useState("");
+  const [timeSlider, setTimeSlider] = useState(100);
+  const [showLegend, setShowLegend] = useState(true);
   const [layerStates, setLayerStates] = useState({
     tourists: true,
     heatmap: showHeatmap,
     riskZones: showRiskZones,
-    weather: false,
+    weather: true,
+    terrain: true,
   });
 
   useEffect(() => {
@@ -112,20 +116,51 @@ const InteractiveMap = ({
         LIVE DEMO - Northeast India
       </Badge>
 
+      {/* Search Bar */}
+      <Card className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 w-80">
+        <CardContent className="p-3">
+          <input
+            type="text"
+            placeholder="Search tourists, locations, incidents..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-3 py-2 text-sm border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+          />
+        </CardContent>
+      </Card>
+
       {/* Map Controls */}
       <div className="absolute top-4 right-4 z-20 space-y-2">
         <Button variant="secondary" size="icon" className="h-8 w-8">
           <Locate className="h-4 w-4" />
         </Button>
-        <Button variant="secondary" size="icon" className="h-8 w-8">
+        <Button variant="secondary" size="icon" className="h-8 w-8" onClick={() => setShowLegend(!showLegend)}>
           <Layers className="h-4 w-4" />
         </Button>
       </div>
 
-      {/* Layer Controls */}
-      <Card className="absolute top-20 right-4 z-20 w-48">
+      {/* Layer Controls & Filter Panel */}
+      <Card className="absolute top-20 right-4 z-20 w-64">
         <CardContent className="p-3">
-          <h4 className="font-semibold text-sm mb-3">Map Layers</h4>
+          <h4 className="font-semibold text-sm mb-3">Filter & Layers</h4>
+          
+          {/* Time Slider */}
+          <div className="mb-4">
+            <label className="text-xs font-medium">Time Range</label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={timeSlider}
+              onChange={(e) => setTimeSlider(Number(e.target.value))}
+              className="w-full mt-1"
+            />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>24h ago</span>
+              <span>Live</span>
+            </div>
+          </div>
+
           <div className="space-y-2 text-xs">
             <label className="flex items-center gap-2 cursor-pointer">
               <input 
@@ -134,7 +169,7 @@ const InteractiveMap = ({
                 checked={layerStates.tourists}
                 onChange={() => layerToggle('tourists')}
               />
-              Tourist Locations
+              🧳 Tourist Locations
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input 
@@ -143,7 +178,7 @@ const InteractiveMap = ({
                 checked={layerStates.heatmap}
                 onChange={() => layerToggle('heatmap')}
               />
-              Risk Heatmap
+              🔥 Tourist Density Heatmap
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input 
@@ -152,7 +187,7 @@ const InteractiveMap = ({
                 checked={layerStates.riskZones}
                 onChange={() => layerToggle('riskZones')}
               />
-              Risk Zones
+              ⚠️ Risk Zones
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input 
@@ -161,11 +196,51 @@ const InteractiveMap = ({
                 checked={layerStates.weather}
                 onChange={() => layerToggle('weather')}
               />
-              Weather Layer
+              🌦️ Weather Layer
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input 
+                type="checkbox" 
+                className="rounded" 
+                checked={layerStates.terrain}
+                onChange={() => layerToggle('terrain')}
+              />
+              🏔️ Terrain & Satellite
             </label>
           </div>
         </CardContent>
       </Card>
+
+      {/* Legend */}
+      {showLegend && (
+        <Card className="absolute top-20 left-4 z-20 w-48">
+          <CardContent className="p-3">
+            <h4 className="font-semibold text-sm mb-3">Legend</h4>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-success"></div>
+                <span>Safe Tourist</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-warning"></div>
+                <span>Warning Status</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-danger animate-pulse"></div>
+                <span>Emergency</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded bg-accent"></div>
+                <span>City/POI</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 border-2 border-danger border-dashed rounded"></div>
+                <span>Risk Zone</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Mock Map Background */}
       <div className="absolute inset-0 opacity-20">
@@ -193,12 +268,41 @@ const InteractiveMap = ({
             ))
           }
           
-          {/* Heatmap overlay */}
+          {/* Enhanced Heatmap overlay */}
           {layerStates.heatmap && (
             <>
-              <circle cx="400" cy="300" r="80" fill="rgba(46,125,50,0.15)" />
-              <circle cx="200" cy="200" r="60" fill="rgba(255,183,77,0.2)" />
-              <circle cx="600" cy="400" r="50" fill="rgba(229,57,53,0.25)" />
+              {/* Low density areas */}
+              <circle cx="400" cy="300" r="100" fill="var(--gradient-heatmap-low)" />
+              <circle cx="200" cy="200" r="80" fill="var(--gradient-heatmap-low)" />
+              
+              {/* Medium density areas */}
+              <circle cx="400" cy="300" r="60" fill="var(--gradient-heatmap-mid)" />
+              <circle cx="600" cy="400" r="70" fill="var(--gradient-heatmap-mid)" />
+              
+              {/* High density areas */}
+              <circle cx="400" cy="300" r="30" fill="var(--gradient-heatmap-high)" />
+              <circle cx="150" cy="150" r="25" fill="var(--gradient-heatmap-high)" />
+            </>
+          )}
+          
+          {/* Weather Layer */}
+          {layerStates.weather && (
+            <>
+              <circle cx="300" cy="200" r="40" fill="rgba(33,150,243,0.2)" stroke="hsl(var(--info))" strokeWidth="1" strokeDasharray="3,3" />
+              <text x="300" y="205" textAnchor="middle" className="text-xs fill-current">🌧️ 22°C</text>
+              
+              <circle cx="500" cy="350" r="35" fill="rgba(255,152,0,0.2)" stroke="hsl(var(--warning))" strokeWidth="1" strokeDasharray="3,3" />
+              <text x="500" y="355" textAnchor="middle" className="text-xs fill-current">☀️ 28°C</text>
+            </>
+          )}
+          
+          {/* Terrain Features */}
+          {layerStates.terrain && (
+            <>
+              <path d="M50,500 Q150,450 250,470 T450,480" stroke="hsl(var(--primary))" strokeWidth="4" fill="none" opacity="0.6" />
+              <path d="M100,350 Q200,300 350,320 T550,330" stroke="hsl(var(--accent))" strokeWidth="3" fill="none" opacity="0.4" />
+              <circle cx="150" cy="180" r="8" fill="hsl(var(--primary))" opacity="0.7" />
+              <text x="150" y="170" textAnchor="middle" className="text-xs fill-current opacity-70">🏔️</text>
             </>
           )}
         </svg>

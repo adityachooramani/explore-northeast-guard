@@ -9,12 +9,12 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Authority Dashboard v2.0 Theme - Government Green with Saffron */
-    --brand-teal: 155 85% 23%;           /* #0B7A55 - Forest green primary */
-    --secondary-green: 146 55% 35%;      /* #2E8B57 - Sea green secondary */
-    --accent-saffron: 29 100% 50%;       /* #FF8A00 - Saffron accent */
-    --background: 110 60% 98%;           /* #F6FBF5 - Light mint background */
-    --foreground: 157 68% 9%;            /* #072B22 - Dark forest text */
+    /* Tourist Authority Dashboard - Green Nature Theme */
+    --brand-primary: 123 38% 35%;        /* #2E7D32 - Forest green primary */
+    --brand-secondary: 118 53% 58%;      /* #66BB6A - Light green secondary */
+    --brand-accent: 124 42% 68%;         /* #A5D6A7 - Pale green accent */
+    --background: 134 29% 97%;           /* #F1F8F6 - Light mint background */
+    --foreground: 157 68% 9%;            /* Dark forest text */
     
     /* Surface Colors */
     --card: 0 0% 100%;                   /* Pure white cards */
@@ -22,13 +22,13 @@ All colors MUST be HSL.
     --surface: 0 0% 100%;
     
     /* Text Colors */
-    --text-primary: 157 68% 9%;          /* #072B22 - Dark forest */
-    --text-muted: 152 15% 35%;           /* #51625B - Muted forest */
+    --text-primary: 157 68% 9%;          /* Dark forest */
+    --text-muted: 152 15% 35%;           /* Muted forest */
     
     /* Status Colors for Authority Dashboard */
     --danger: 4 82% 60%;                 /* #E53935 Emergency red */
-    --warning: 35 100% 64%;              /* #FFB74D Warning amber */
-    --success: 123 38% 35%;              /* #2E7D32 Safe green */
+    --warning: 50 100% 60%;              /* #FDD835 Warning yellow */
+    --success: 122 44% 40%;              /* #43A047 Safe green */
     --info: 201 98% 41%;                 /* #0288D1 Info blue */
     
     /* Authority Dashboard Colors */
@@ -41,26 +41,26 @@ All colors MUST be HSL.
     --ok: 122 48% 42%;                   /* #388E3C OK status */
     
     /* Semantic tokens mapped to shadcn system */
-    --primary: 155 85% 23%;              /* Forest green primary */
+    --primary: 123 38% 35%;              /* #2E7D32 Forest green primary */
     --primary-foreground: 0 0% 100%;
-    --secondary: 152 15% 90%;            /* Light muted green */
+    --secondary: 118 53% 90%;            /* Light green secondary */
     --secondary-foreground: 157 68% 9%;
-    --muted: 152 15% 90%;
+    --muted: 124 42% 90%;
     --muted-foreground: 152 15% 35%;
-    --accent: 29 100% 50%;               /* Saffron accent */
-    --accent-foreground: 0 0% 100%;
+    --accent: 124 42% 68%;               /* #A5D6A7 Pale green accent */
+    --accent-foreground: 157 68% 9%;
     --destructive: 4 82% 60%;            /* Emergency red */
     --destructive-foreground: 0 0% 100%;
-    --border: 152 15% 85%;
-    --input: 152 15% 90%;
-    --ring: 155 85% 23%;
+    --border: 134 29% 85%;
+    --input: 134 29% 90%;
+    --ring: 123 38% 35%;
     
     /* Gradients */
     --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.44) 100%);
     --gradient-emergency: linear-gradient(135deg, rgba(229,57,53,0.1), rgba(229,57,53,0.3));
-    --gradient-heatmap-low: rgba(63,81,181,0.12);
-    --gradient-heatmap-mid: rgba(255,193,7,0.20);
-    --gradient-heatmap-high: rgba(211,47,47,0.28);
+    --gradient-heatmap-low: rgba(165,214,167,0.3);   /* #A5D6A7 */
+    --gradient-heatmap-mid: rgba(102,187,106,0.5);   /* #66BB6A */
+    --gradient-heatmap-high: rgba(46,125,50,0.7);    /* #2E7D32 */
     
     /* Elevation & Shadows */
     --shadow-card: 0 6px 18px rgba(0,0,0,0.08);
