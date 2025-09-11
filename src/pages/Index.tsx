@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MobileApp } from "@/components/tourist/mobile-app";
-import { AuthorityDashboard } from "@/components/authority/dashboard";
+import { AuthorityDashboardV2 } from "@/components/authority/dashboard-v2";
 import { Smartphone, Monitor } from "lucide-react";
 
 const Index = () => {
@@ -13,7 +13,7 @@ const Index = () => {
   }
 
   if (currentView === "dashboard") {
-    return <AuthorityDashboard />;
+    return <AuthorityDashboardV2 />;
   }
 
   return (

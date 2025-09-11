@@ -9,29 +9,30 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Brand Colors - Nature inspired */
-    --brand-teal: 180 100% 21%;          /* #00696B */
-    --accent-saffron: 29 100% 50%;       /* #FF8A00 */
-    --background: 32 30% 98%;            /* #FCFBF9 cream */
-    --foreground: 208 36% 13%;           /* #14202B dark text */
+    /* Authority Dashboard v2.0 Theme - Government Green with Saffron */
+    --brand-teal: 155 85% 23%;           /* #0B7A55 - Forest green primary */
+    --secondary-green: 146 55% 35%;      /* #2E8B57 - Sea green secondary */
+    --accent-saffron: 29 100% 50%;       /* #FF8A00 - Saffron accent */
+    --background: 110 60% 98%;           /* #F6FBF5 - Light mint background */
+    --foreground: 157 68% 9%;            /* #072B22 - Dark forest text */
     
     /* Surface Colors */
     --card: 0 0% 100%;                   /* Pure white cards */
-    --card-foreground: 208 36% 13%;     
+    --card-foreground: 157 68% 9%;       /* Dark forest on white */
     --surface: 0 0% 100%;
     
     /* Text Colors */
-    --text-primary: 208 36% 13%;         /* #14202B */
-    --text-muted: 213 11% 38%;           /* #58616A */
+    --text-primary: 157 68% 9%;          /* #072B22 - Dark forest */
+    --text-muted: 152 15% 35%;           /* #51625B - Muted forest */
     
-    /* Safety Status Colors */
+    /* Status Colors for Authority Dashboard */
     --danger: 4 82% 60%;                 /* #E53935 Emergency red */
     --warning: 35 100% 64%;              /* #FFB74D Warning amber */
     --success: 123 38% 35%;              /* #2E7D32 Safe green */
     --info: 201 98% 41%;                 /* #0288D1 Info blue */
     
     /* Authority Dashboard Colors */
-    --dashboard-bg: 216 20% 96%;         /* #F6F8FA Panel background */
+    --dashboard-bg: 110 60% 98%;         /* #F6FBF5 Light mint background */
     --dashboard-card: 0 0% 100%;         /* White cards */
     --dashboard-text: 203 39% 11%;       /* #0B1A26 */
     --dashboard-muted: 202 14% 40%;      /* #5C6B73 */
@@ -40,19 +41,19 @@ All colors MUST be HSL.
     --ok: 122 48% 42%;                   /* #388E3C OK status */
     
     /* Semantic tokens mapped to shadcn system */
-    --primary: 180 100% 21%;             /* Brand teal */
+    --primary: 155 85% 23%;              /* Forest green primary */
     --primary-foreground: 0 0% 100%;
-    --secondary: 213 27% 84%;            /* Light gray */
-    --secondary-foreground: 208 36% 13%;
-    --muted: 213 27% 84%;
-    --muted-foreground: 213 11% 38%;
+    --secondary: 152 15% 90%;            /* Light muted green */
+    --secondary-foreground: 157 68% 9%;
+    --muted: 152 15% 90%;
+    --muted-foreground: 152 15% 35%;
     --accent: 29 100% 50%;               /* Saffron accent */
     --accent-foreground: 0 0% 100%;
     --destructive: 4 82% 60%;            /* Emergency red */
     --destructive-foreground: 0 0% 100%;
-    --border: 213 27% 84%;
-    --input: 213 27% 84%;
-    --ring: 180 100% 21%;
+    --border: 152 15% 85%;
+    --input: 152 15% 90%;
+    --ring: 155 85% 23%;
     
     /* Gradients */
     --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.44) 100%);
