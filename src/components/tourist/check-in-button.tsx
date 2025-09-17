@@ -26,21 +26,23 @@ const CheckInButton = ({ className, onCheckIn }: CheckInButtonProps) => {
       size="sm"
       className={cn(
         "fixed top-20 left-1/2 -translate-x-1/2 z-40",
-        "shadow-floating backdrop-blur-sm",
-        "transition-all duration-300",
-        isCheckedIn && "bg-success hover:bg-success/90 text-white",
+        "shadow-floating backdrop-blur-md border-0",
+        "transition-all duration-300 button-touch",
+        isCheckedIn 
+          ? "bg-deep-forest hover:bg-deep-forest/90 text-pure-white" 
+          : "bg-card/80 hover:bg-card text-pure-white border border-neutral-gray/20",
         className
       )}
     >
       {isCheckedIn ? (
         <>
           <CheckCircle className="h-4 w-4 mr-2" />
-          I'm Safe ✓
+          <span className="text-small font-medium">I'm Safe ✓</span>
         </>
       ) : (
         <>
           <MapPin className="h-4 w-4 mr-2" />
-          Check In
+          <span className="text-small font-medium">Check In</span>
         </>
       )}
     </Button>

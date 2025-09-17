@@ -57,13 +57,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Custom app colors
-        "brand-teal": "hsl(var(--brand-teal))",
-        "accent-saffron": "hsl(var(--accent-saffron))",
+        // Dark-First Mobile App Colors
+        "primary-dark": "hsl(var(--primary-dark))",
+        "deep-forest": "hsl(var(--deep-forest))",
+        "soft-green": "hsl(var(--soft-green))",
+        "amber-warning": "hsl(var(--amber-warning))",
+        "neutral-gray": "hsl(var(--neutral-gray))",
+        "pure-white": "hsl(var(--pure-white))",
         danger: "hsl(var(--danger))",
         warning: "hsl(var(--warning))",
         success: "hsl(var(--success))",
         info: "hsl(var(--info))",
+        safe: "hsl(var(--safe))",
         critical: "hsl(var(--critical))",
         urgent: "hsl(var(--urgent))",
         ok: "hsl(var(--ok))",
@@ -83,6 +88,8 @@ export default {
       backgroundImage: {
         "gradient-hero": "var(--gradient-hero)",
         "gradient-emergency": "var(--gradient-emergency)",
+        "gradient-panic": "var(--gradient-panic)",
+        "gradient-surface": "var(--gradient-surface)",
       },
       keyframes: {
         "accordion-down": {
@@ -134,6 +141,14 @@ export default {
             transform: "scale(1)",
             opacity: "1"
           }
+        },
+        "progress-ring": {
+          "0%": { "stroke-dasharray": "0 100" },
+          "100%": { "stroke-dasharray": "100 100" }
+        },
+        "hold-progress": {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.1)" }
         }
       },
       animation: {
@@ -143,6 +158,8 @@ export default {
         "fade-in": "fade-in 0.3s ease-out",
         "slide-up": "slide-up 0.3s ease-out",
         "scale-in": "scale-in 0.2s ease-out",
+        "progress-ring": "progress-ring 2s linear forwards",
+        "hold-progress": "hold-progress 2s ease-out forwards",
       },
     },
   },

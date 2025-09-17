@@ -30,28 +30,29 @@ const MockMap = () => {
   }, []);
 
   return (
-    <div className="h-64 bg-gradient-to-br from-primary/10 to-accent/10 relative overflow-hidden">
+    <div className="h-64 bg-gradient-to-br from-deep-forest/20 to-soft-green/10 relative overflow-hidden border border-neutral-gray/20 rounded-lg">
       {/* Demo Badge */}
-      <Badge variant="secondary" className="absolute top-2 left-2 z-10 text-xs">
+      <Badge variant="secondary" className="absolute top-3 left-3 z-10 text-xs bg-surface/80 text-pure-white border-neutral-gray/20">
         DEMO
       </Badge>
 
       {/* Map Controls */}
-      <div className="absolute top-2 right-2 z-10 flex flex-col gap-1">
-        <Button variant="secondary" size="icon" className="h-8 w-8">
-          <Locate className="h-4 w-4" />
+      <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
+        <Button variant="secondary" size="icon" className="h-8 w-8 bg-surface/80 hover:bg-surface border-neutral-gray/20">
+          <Locate className="h-4 w-4 text-pure-white" />
         </Button>
-        <Button variant="secondary" size="icon" className="h-8 w-8">
-          <Layers className="h-4 w-4" />
+        <Button variant="secondary" size="icon" className="h-8 w-8 bg-surface/80 hover:bg-surface border-neutral-gray/20">
+          <Layers className="h-4 w-4 text-pure-white" />
         </Button>
       </div>
 
       {/* Mock Map Background */}
-      <div className="absolute inset-0 opacity-20">
+      <div className="absolute inset-0 opacity-30">
         <svg viewBox="0 0 400 300" className="w-full h-full">
-          {/* Simple terrain paths */}
-          <path d="M0,150 Q100,100 200,120 T400,140" stroke="hsl(var(--primary))" strokeWidth="2" fill="none" opacity="0.3" />
-          <path d="M0,200 Q150,160 300,180 T400,190" stroke="hsl(var(--accent))" strokeWidth="1.5" fill="none" opacity="0.2" />
+          {/* Terrain paths with dark theme colors */}
+          <path d="M0,150 Q100,100 200,120 T400,140" stroke="hsl(var(--deep-forest))" strokeWidth="2" fill="none" opacity="0.4" />
+          <path d="M0,200 Q150,160 300,180 T400,190" stroke="hsl(var(--soft-green))" strokeWidth="1.5" fill="none" opacity="0.3" />
+          <path d="M50,250 Q200,220 350,240" stroke="hsl(var(--neutral-gray))" strokeWidth="1" fill="none" opacity="0.2" />
         </svg>
       </div>
 
@@ -68,23 +69,23 @@ const MockMap = () => {
           }}
           onClick={() => setActiveMarker(activeMarker === marker.id ? null : marker.id)}
         >
-          <div className={`w-6 h-6 rounded-full flex items-center justify-center shadow-md ${
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center shadow-lg border-2 ${
             marker.type === "tourist" 
-              ? "bg-primary text-primary-foreground animate-pulse" 
+              ? "bg-deep-forest border-soft-green text-pure-white animate-pulse" 
               : marker.type === "city"
-              ? "bg-accent text-accent-foreground"
-              : "bg-muted text-muted-foreground"
+              ? "bg-soft-green border-pure-white text-primary-dark"
+              : "bg-surface border-neutral-gray text-pure-white"
           }`}>
-            <MapPin className="h-3 w-3" />
+            <MapPin className="h-4 w-4" />
           </div>
           
           {/* Marker Popup */}
           {activeMarker === marker.id && (
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 text-xs whitespace-nowrap shadow-lg">
+            <div className="absolute bottom-9 left-1/2 transform -translate-x-1/2 bg-card/95 backdrop-blur-sm rounded-lg px-3 py-2 text-xs whitespace-nowrap shadow-lg border border-neutral-gray/20">
               <div className="text-center">
-                <p className="font-medium">{marker.label}</p>
+                <p className="font-medium text-pure-white">{marker.label}</p>
                 {marker.type === "tourist" && (
-                  <p className="text-muted-foreground">Last seen: {demoTime.toLocaleTimeString()}</p>
+                  <p className="text-neutral-gray">Last seen: {demoTime.toLocaleTimeString()}</p>
                 )}
               </div>
             </div>
@@ -94,17 +95,17 @@ const MockMap = () => {
 
       {/* Safety Indicators */}
       <div className="absolute bottom-4 left-4">
-        <div className="flex items-center gap-2 text-xs bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1">
-          <div className="w-3 h-3 rounded-full bg-success/60"></div>
-          <span>Low Risk Zone</span>
+        <div className="flex items-center gap-2 text-xs bg-card/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-neutral-gray/20">
+          <div className="w-3 h-3 rounded-full bg-deep-forest animate-pulse"></div>
+          <span className="text-pure-white font-medium">Low Risk Zone</span>
         </div>
       </div>
 
       {/* Safety Score */}
-      <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2">
+      <div className="absolute bottom-4 right-4 bg-card/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-neutral-gray/20">
         <div className="flex items-center gap-2">
-          <Heart className="h-4 w-4 text-success" />
-          <span className="text-sm font-medium">Safety: 92%</span>
+          <Heart className="h-4 w-4 text-deep-forest" />
+          <span className="text-small font-medium text-pure-white">Safety: 92%</span>
         </div>
       </div>
     </div>

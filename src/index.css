@@ -2,75 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Northeast India Tourist App Design System
-Nature-inspired, safety-first design with accessibility focus
+/* Tourist Safety Mobile App - Dark-First Design System
+Calm, minimal, trustworthy UI with forest green accents
+Primary theme: Black background with Deep Forest Green accents
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Tourist Authority Dashboard - Green Nature Theme */
-    --brand-primary: 123 38% 35%;        /* #2E7D32 - Forest green primary */
-    --brand-secondary: 118 53% 58%;      /* #66BB6A - Light green secondary */
-    --brand-accent: 124 42% 68%;         /* #A5D6A7 - Pale green accent */
-    --background: 134 29% 97%;           /* #F1F8F6 - Light mint background */
-    --foreground: 157 68% 9%;            /* Dark forest text */
+    /* Dark-First Mobile Theme - Primary Colors */
+    --primary-dark: 0 0% 4%;             /* #0A0A0A - Primary black background */
+    --deep-forest: 142 94% 13%;          /* #014421 - Deep forest green accent */
+    --soft-green: 147 50% 47%;           /* #3CB371 - Soft green highlights */
+    --amber-warning: 37 100% 56%;        /* #FFB020 - Warning amber */
+    --neutral-gray: 0 0% 63%;            /* #A0A0A0 - Neutral gray */
+    --pure-white: 0 0% 100%;             /* #FFFFFF - Pure white */
     
-    /* Surface Colors */
-    --card: 0 0% 100%;                   /* Pure white cards */
-    --card-foreground: 157 68% 9%;       /* Dark forest on white */
-    --surface: 0 0% 100%;
+    /* Mobile App Core Colors */
+    --background: 0 0% 4%;               /* Dark background */
+    --foreground: 0 0% 100%;             /* White text on dark */
+    --card: 0 0% 8%;                     /* Slightly lighter dark cards */
+    --card-foreground: 0 0% 98%;         /* Near-white text on cards */
+    --surface: 0 0% 6%;                  /* Surface elements */
     
-    /* Text Colors */
-    --text-primary: 157 68% 9%;          /* Dark forest */
-    --text-muted: 152 15% 35%;           /* Muted forest */
-    
-    /* Status Colors for Authority Dashboard */
-    --danger: 4 82% 60%;                 /* #E53935 Emergency red */
-    --warning: 50 100% 60%;              /* #FDD835 Warning yellow */
-    --success: 122 44% 40%;              /* #43A047 Safe green */
-    --info: 201 98% 41%;                 /* #0288D1 Info blue */
-    
-    /* Authority Dashboard Colors */
-    --dashboard-bg: 110 60% 98%;         /* #F6FBF5 Light mint background */
-    --dashboard-card: 0 0% 100%;         /* White cards */
-    --dashboard-text: 203 39% 11%;       /* #0B1A26 */
-    --dashboard-muted: 202 14% 40%;      /* #5C6B73 */
-    --critical: 4 77% 50%;               /* #D32F2F Critical alerts */
-    --urgent: 31 98% 50%;                /* #FB8C00 Urgent */
-    --ok: 122 48% 42%;                   /* #388E3C OK status */
-    
-    /* Semantic tokens mapped to shadcn system */
-    --primary: 123 38% 35%;              /* #2E7D32 Forest green primary */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 118 53% 90%;            /* Light green secondary */
-    --secondary-foreground: 157 68% 9%;
-    --muted: 124 42% 90%;
-    --muted-foreground: 152 15% 35%;
-    --accent: 124 42% 68%;               /* #A5D6A7 Pale green accent */
-    --accent-foreground: 157 68% 9%;
+    /* Semantic Color System */
+    --primary: 142 94% 13%;              /* Deep forest green */
+    --primary-foreground: 0 0% 100%;     /* White on green */
+    --secondary: 0 0% 12%;               /* Dark secondary */
+    --secondary-foreground: 0 0% 90%;    /* Light text on dark secondary */
+    --muted: 0 0% 15%;                   /* Muted backgrounds */
+    --muted-foreground: 0 0% 63%;        /* Muted text */
+    --accent: 147 50% 47%;               /* Soft green accent */
+    --accent-foreground: 0 0% 100%;      /* White on accent */
     --destructive: 4 82% 60%;            /* Emergency red */
-    --destructive-foreground: 0 0% 100%;
-    --border: 134 29% 85%;
-    --input: 134 29% 90%;
-    --ring: 123 38% 35%;
+    --destructive-foreground: 0 0% 100%; /* White on red */
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.44) 100%);
-    --gradient-emergency: linear-gradient(135deg, rgba(229,57,53,0.1), rgba(229,57,53,0.3));
-    --gradient-heatmap-low: rgba(165,214,167,0.3);   /* #A5D6A7 */
-    --gradient-heatmap-mid: rgba(102,187,106,0.5);   /* #66BB6A */
-    --gradient-heatmap-high: rgba(46,125,50,0.7);    /* #2E7D32 */
+    /* Status Colors */
+    --danger: 4 82% 60%;                 /* #E53935 Emergency red */
+    --warning: 37 100% 56%;              /* #FFB020 Warning amber */
+    --success: 142 94% 13%;              /* Deep forest green for success */
+    --info: 201 98% 41%;                 /* Info blue */
+    --safe: 142 94% 13%;                 /* Safe green */
+    --critical: 4 77% 50%;               /* Critical alerts */
+    --urgent: 37 100% 56%;               /* Urgent amber */
+    --ok: 142 94% 13%;                   /* OK forest green */
     
-    /* Elevation & Shadows */
-    --shadow-card: 0 6px 18px rgba(0,0,0,0.08);
-    --shadow-emergency: 0 6px 18px rgba(0,0,0,0.28);
-    --shadow-floating: 0 8px 32px rgba(0,105,107,0.15);
+    /* UI Element Colors */
+    --border: 0 0% 20%;                  /* Dark borders */
+    --input: 0 0% 12%;                   /* Input backgrounds */
+    --ring: 142 94% 13%;                 /* Focus rings */
+    --popover: 0 0% 8%;                  /* Popover background */
+    --popover-foreground: 0 0% 98%;      /* Popover text */
     
-    /* Spacing & Borders */
+    /* Dark-First Gradients */
+    --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(1,68,33,0.4) 100%);
+    --gradient-emergency: linear-gradient(135deg, rgba(229,57,53,0.2), rgba(229,57,53,0.4));
+    --gradient-panic: linear-gradient(135deg, rgba(255,176,32,0.1), rgba(255,176,32,0.3));
+    --gradient-surface: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05));
+    
+    /* Dark Theme Shadows */
+    --shadow-card: 0 4px 12px rgba(0,0,0,0.4);
+    --shadow-emergency: 0 8px 24px rgba(229,57,53,0.3);
+    --shadow-floating: 0 12px 40px rgba(0,0,0,0.6);
+    --shadow-glow: 0 0 20px rgba(1,68,33,0.3);
+    
+    /* Mobile-Optimized Spacing & Borders */
     --radius: 0.75rem;                   /* 12px - Medium rounded */
-    --radius-large: 1.125rem;            /* 18px - Large rounded */
+    --radius-large: 1rem;                /* 16px - Large rounded */
     --radius-small: 0.5rem;              /* 8px - Small rounded */
+    --radius-button: 0.875rem;           /* 14px - Button radius */
     
     /* Sidebar tokens for dashboard */
     --sidebar-background: 216 20% 96%;
@@ -87,38 +87,23 @@ All colors MUST be HSL.
     --transition-quick: all 0.2s ease-out;
   }
 
-  .dark {
-    /* Dark mode - keeping consistent with brand but darker */
-    --background: 208 36% 7%;            /* Dark version of foreground */
-    --foreground: 0 0% 98%;
-    --card: 208 36% 9%;
-    --card-foreground: 0 0% 98%;
-    --text-primary: 0 0% 98%;
-    --text-muted: 213 11% 65%;
-    
-    --primary: 180 100% 35%;             /* Lighter teal for dark mode */
+  /* Light mode override (for authority dashboard) */
+  .light {
+    --background: 134 29% 97%;           /* Light mint background */
+    --foreground: 157 68% 9%;            /* Dark forest text */
+    --card: 0 0% 100%;                   /* Pure white cards */
+    --card-foreground: 157 68% 9%;       /* Dark forest on white */
+    --primary: 123 38% 35%;              /* Forest green primary */
     --primary-foreground: 0 0% 100%;
-    --secondary: 208 36% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 208 36% 15%;
-    --muted-foreground: 213 11% 65%;
-    --accent: 29 100% 60%;               /* Lighter saffron */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 4 82% 60%;            /* Keep emergency red prominent */
-    --destructive-foreground: 0 0% 100%;
-    --border: 208 36% 15%;
-    --input: 208 36% 15%;
-    --ring: 180 100% 35%;
-    
-    /* Sidebar dark theme */
-    --sidebar-background: 208 36% 7%;
-    --sidebar-foreground: 213 11% 65%;
-    --sidebar-primary: 180 100% 35%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 208 36% 15%;
-    --sidebar-accent-foreground: 213 11% 65%;
-    --sidebar-border: 208 36% 15%;
-    --sidebar-ring: 180 100% 35%;
+    --secondary: 118 53% 90%;            /* Light green secondary */
+    --secondary-foreground: 157 68% 9%;
+    --muted: 124 42% 90%;
+    --muted-foreground: 152 15% 35%;
+    --accent: 124 42% 68%;               /* Pale green accent */
+    --accent-foreground: 157 68% 9%;
+    --border: 134 29% 85%;
+    --input: 134 29% 90%;
+    --ring: 123 38% 35%;
   }
 }
 
@@ -129,8 +114,20 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', 'Poppins', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+  
+  /* Typography Scale - Mobile Optimized */
+  .text-h1 { @apply text-2xl font-semibold leading-tight; }      /* 24pt */
+  .text-h2 { @apply text-xl font-semibold leading-snug; }        /* 20pt */
+  .text-body { @apply text-base font-normal leading-relaxed; }   /* 16pt */
+  .text-small { @apply text-sm font-medium leading-normal; }     /* 14pt */
+  
+  /* Touch-friendly sizing */
+  .touch-target { min-height: 48px; min-width: 48px; }
+  .button-touch { min-height: 44px; min-width: 44px; }
   
   /* Emergency and accessibility styles */
   .hero-image {
@@ -151,8 +148,8 @@ All colors MUST be HSL.
     position: fixed;
     right: 20px;
     bottom: 20px;
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background: hsl(var(--danger));
     display: flex;
@@ -160,14 +157,35 @@ All colors MUST be HSL.
     justify-content: center;
     box-shadow: var(--shadow-emergency);
     color: white;
-    font-size: 28px;
+    font-size: 32px;
     animation: pulse-emergency 4s infinite;
     z-index: 50;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .floating-panic:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-floating);
+  }
+  
+  /* Progress ring for panic button */
+  .panic-progress-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, hsl(var(--warning)) 0%, transparent 0%);
+    padding: 4px;
+    animation: progress-spin 2s linear forwards;
   }
   
   @keyframes pulse-emergency {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
+    0%, 100% { transform: scale(1); box-shadow: var(--shadow-emergency); }
+    50% { transform: scale(1.02); box-shadow: var(--shadow-floating); }
+  }
+  
+  @keyframes progress-spin {
+    0% { background: conic-gradient(from 0deg, hsl(var(--warning)) 0%, transparent 0%); }
+    100% { background: conic-gradient(from 0deg, hsl(var(--warning)) 100%, transparent 0%); }
   }
   
   /* High contrast for accessibility */
