@@ -9,14 +9,104 @@ import { StatusChip } from "@/components/ui/status-chip";
 import { FeatureTile } from "@/components/ui/feature-tile";
 import { MockMap } from "@/components/ui/mock-map";
 import { ProfileScreen } from "@/components/tourist/profile-screen";
-import { User, Menu, Shield, Heart, Car, Calendar, MapPin, Phone } from "lucide-react";
+import { LanguageSelect } from "@/components/tourist/language-select";
+import { PrivacyScreen } from "@/components/tourist/privacy-screen";
+import { RegistrationFlow } from "@/components/tourist/registration-flow";
+import { DigitalID } from "@/components/tourist/digital-id";
+import { GeoFenceAlert } from "@/components/tourist/geo-fence-alert";
+import { LocationHistory } from "@/components/tourist/location-history";
+import { SettingsScreen } from "@/components/tourist/settings-screen";
+import { VoiceRecorder } from "@/components/tourist/voice-recorder";
+import { User, Menu, Shield, Heart, Car, Calendar, MapPin, Phone, Settings, History, QrCode } from "lucide-react";
 import buddhaHero from "@/assets/buddha-hero.jpg";
 
 const MobileApp = () => {
-  const [currentView, setCurrentView] = useState<"splash" | "home" | "profile">("splash");
+  const [currentView, setCurrentView] = useState<
+    "language" | "splash" | "privacy" | "registration" | "home" | "profile" | 
+    "digitalId" | "history" | "settings" | "panicFlow"
+  >("language");
+  const [geoFenceAlert, setGeoFenceAlert] = useState<{
+    type: string;
+    description: string; 
+    severity: "low" | "medium" | "high";
+  } | null>(null);
+  
+  const userData = {
+    name: "John Doe",
+    phone: "+91 98765 43210", 
+    id: "NEST_2024_001234"
+  };
 
+  // Handle different screens
+  if (currentView === "language") {
+    return <LanguageSelect onLanguageSelect={() => setCurrentView("splash")} />;
+  }
+  
+  if (currentView === "privacy") {
+    return <PrivacyScreen onContinue={() => setCurrentView("registration")} />;
+  }
+  
+  if (currentView === "registration") {
+    return (
+      <RegistrationFlow 
+        onComplete={() => setCurrentView("home")}
+        onBack={() => setCurrentView("privacy")}
+      />
+    );
+  }
+  
   if (currentView === "profile") {
     return <ProfileScreen onBack={() => setCurrentView("home")} />;
+  }
+  
+  if (currentView === "digitalId") {
+    return (
+      <DigitalID 
+        userData={userData}
+        onBack={() => setCurrentView("home")}
+      />
+    );
+  }
+  
+  if (currentView === "history") {
+    return <LocationHistory onBack={() => setCurrentView("home")} />;
+  }
+  
+  if (currentView === "settings") {
+    return <SettingsScreen onBack={() => setCurrentView("home")} />;
+  }
+  
+  if (currentView === "panicFlow") {
+    return (
+      <div className="min-h-screen bg-primary-dark flex flex-col items-center justify-center p-6">
+        <div className="w-full max-w-sm space-y-6">
+          <div className="text-center">
+            <h1 className="text-h1 font-bold text-pure-white mb-4">Emergency Activated</h1>
+            <p className="text-body text-neutral-gray mb-6">Record a message for responders</p>
+          </div>
+          
+          <VoiceRecorder 
+            maxDuration={30}
+            autoStart={true}
+            onRecordingComplete={(blob) => {
+              console.log("Recording completed:", blob);
+              // Simulate emergency pipeline
+              setTimeout(() => {
+                setCurrentView("home");
+              }, 3000);
+            }}
+          />
+          
+          <Button
+            onClick={() => setCurrentView("home")}
+            variant="outline"
+            className="w-full border-neutral-gray/20 text-pure-white hover:bg-card/20"
+          >
+            Cancel Emergency
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   if (currentView === "splash") {
@@ -36,7 +126,7 @@ const MobileApp = () => {
               Explore safe. Explore Northeast.
             </p>
             <Button 
-              onClick={() => setCurrentView("home")}
+              onClick={() => setCurrentView("privacy")}
               size="lg"
               className="button-touch bg-deep-forest hover:bg-deep-forest/90 text-pure-white 
                          border-0 shadow-lg backdrop-blur-sm transition-all duration-300
@@ -103,17 +193,17 @@ const MobileApp = () => {
               className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-deep-forest/50 transition-all duration-200"
             />
             <FeatureTile 
-              icon={User} 
-              label="Local Help" 
+              icon={QrCode} 
+              label="Digital ID" 
               variant="info" 
-              onClick={() => console.log("Local Help tapped")}
+              onClick={() => setCurrentView("digitalId")}
               className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-soft-green/50 transition-all duration-200"
             />
             <FeatureTile 
-              icon={Car} 
-              label="Transport" 
+              icon={History} 
+              label="History" 
               variant="accent" 
-              onClick={() => console.log("Transport booking tapped")}
+              onClick={() => setCurrentView("history")}
               className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-soft-green/50 transition-all duration-200"
             />
             <FeatureTile 
@@ -131,10 +221,17 @@ const MobileApp = () => {
               className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-deep-forest/50 transition-all duration-200"
             />
             <FeatureTile 
+              icon={Settings} 
+              label="Settings" 
+              variant="info" 
+              onClick={() => setCurrentView("settings")}
+              className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-neutral-gray/50 transition-all duration-200"
+            />
+            <FeatureTile 
               icon={Phone} 
               label="Emergency" 
               variant="destructive" 
-              onClick={() => console.log("Emergency tapped")}
+              onClick={() => setCurrentView("panicFlow")}
               className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-danger/50 transition-all duration-200"
             />
           </div>
@@ -148,7 +245,18 @@ const MobileApp = () => {
       </div>
 
       {/* Panic Button */}
-      <PanicButton />
+      <PanicButton onEmergency={() => setCurrentView("panicFlow")} />
+      
+      {/* Geo-fence Alert Modal */}
+      {geoFenceAlert && (
+        <GeoFenceAlert
+          alert={geoFenceAlert}
+          onDismiss={(action) => {
+            console.log("Geo-fence action:", action);
+            setGeoFenceAlert(null);
+          }}
+        />
+      )}
     </div>
   );
 };
