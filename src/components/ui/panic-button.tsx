@@ -124,7 +124,7 @@ const PanicButton = ({ className, onEmergency }: PanicButtonProps) => {
                 strokeWidth="3"
                 strokeLinecap="round"
                 strokeDasharray={`${2 * Math.PI * 30}`}
-                strokeDashoffset={`${2 * Math.PI * 30 * (1 - holdProgress / 100)}`}
+                strokeDashoffset={`${2 * Math.PI * 30 * (1 - holdProgress)}`}
                 className="transition-all duration-100 ease-out drop-shadow-sm"
               />
             </svg>

@@ -20,7 +20,7 @@ const Index = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="text-center max-w-2xl">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">NorthEast Safe</h1>
+          <h1 className="text-4xl font-bold mb-4">NEST</h1>
           <p className="text-xl text-muted-foreground mb-2">Tourist Safety Platform</p>
           <p className="text-muted-foreground">
             Comprehensive safety solution for tourists exploring Northeast India, 

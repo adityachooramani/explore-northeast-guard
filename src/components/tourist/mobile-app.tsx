@@ -7,7 +7,7 @@ import { CheckInButton } from "@/components/tourist/check-in-button";
 import { AttractionsCarousel } from "@/components/tourist/attractions-carousel";
 import { StatusChip } from "@/components/ui/status-chip";
 import { FeatureTile } from "@/components/ui/feature-tile";
-import { MockMap } from "@/components/ui/mock-map";
+import { OSMMap } from "@/components/ui/osm-map";
 import { ProfileScreen } from "@/components/tourist/profile-screen";
 import { LanguageSelect } from "@/components/tourist/language-select";
 import { PrivacyScreen } from "@/components/tourist/privacy-screen";
@@ -135,7 +135,7 @@ const MobileApp = () => {
         >
           <div className="text-center animate-fade-in px-6">
             <h1 className="text-h1 text-pure-white font-semibold mb-3 tracking-tight">
-              NorthEast Safe
+              NEST
             </h1>
             <p className="text-body text-pure-white/90 mb-8 max-w-sm mx-auto">
               Explore safe. Explore Northeast.
@@ -165,7 +165,7 @@ const MobileApp = () => {
         <div className="flex items-center justify-between p-4 max-w-md mx-auto">
           <div className="flex items-center gap-3">
             <Shield className="h-6 w-6 text-deep-forest" />
-            <span className="text-h2 font-semibold text-pure-white">NorthEast Safe</span>
+            <span className="text-h2 font-semibold text-pure-white">NEST</span>
           </div>
           <div className="flex items-center gap-3">
             <StatusChip variant="ok" className="bg-deep-forest/20 text-deep-forest border-deep-forest/30">
@@ -192,7 +192,18 @@ const MobileApp = () => {
         {/* Map Section */}
         <Card className="overflow-hidden bg-card border-neutral-gray/20 shadow-card">
           <CardContent className="p-0">
-            <MockMap />
+            <div style={{ height: 256 }}>
+              <OSMMap 
+                center={[26.2006, 92.9376]} 
+                zoom={7}
+                markers={[
+                  { id: "guh", position: [26.2006, 92.9376], label: "Guwahati", details: "Active tourists: 45" },
+                  { id: "shl", position: [25.5788, 91.8933], label: "Shillong", details: "Active tourists: 32" },
+                  { id: "ita", position: [27.0238, 93.6053], label: "Itanagar", details: "Warning area" },
+                  { id: "gnk", position: [27.533, 88.5122], label: "Gangtok", details: "Active tourists: 25" },
+                ]}
+              />
+            </div>
           </CardContent>
         </Card>
 
