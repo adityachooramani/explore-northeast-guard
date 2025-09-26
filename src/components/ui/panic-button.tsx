@@ -90,37 +90,50 @@ const PanicButton = ({ className, onEmergency }: PanicButtonProps) => {
   return (
     <>
       <Button
-        className={cn(
-          "floating-panic fixed bottom-6 right-6 h-20 w-20 rounded-full shadow-emergency",
-          "bg-danger hover:bg-danger/90 text-pure-white border-0",
-          "focus-visible:ring-2 focus-visible:ring-danger focus-visible:ring-offset-2",
-          "transition-all duration-300 hover:scale-105 active:scale-95",
-          "touch-target overflow-hidden",
-          className
-        )}
-        onClick={() => setIsDialogOpen(true)}
         onMouseDown={startHoldProgress}
         onMouseUp={stopHoldProgress}
         onMouseLeave={stopHoldProgress}
         onTouchStart={startHoldProgress}
         onTouchEnd={stopHoldProgress}
+        className={cn(
+          "fixed bottom-8 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 touch-target bg-gradient-to-br from-danger via-danger/90 to-danger/80 text-pure-white shadow-lg hover:shadow-danger/30 hover:scale-110 active:scale-95 border-2 border-danger/50",
+          isHolding && "animate-pulse scale-110 shadow-2xl shadow-danger/50",
+          className
+        )}
         aria-label="Emergency panic button - hold for 2 seconds to activate"
         size="icon"
       >
-        {/* Progress ring */}
-        {isHolding && (
-          <div 
-            className="absolute inset-0 rounded-full border-4 border-transparent"
-            style={{
-              background: `conic-gradient(from 0deg, hsl(var(--amber-warning)) ${holdProgress * 360}deg, transparent 0deg)`,
-              padding: '2px'
-            }}
-          />
+        {/* Progress Ring */}
+        {(isHolding || holdProgress > 0) && (
+          <div className="absolute inset-0 rounded-full">
+            <svg className="w-full h-full -rotate-90" viewBox="0 0 64 64">
+              <circle
+                cx="32"
+                cy="32"
+                r="30"
+                fill="none"
+                stroke="rgba(255, 255, 255, 0.2)"
+                strokeWidth="2"
+              />
+              <circle
+                cx="32"
+                cy="32"
+                r="30"
+                fill="none"
+                stroke="rgba(255, 255, 255, 0.9)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray={`${2 * Math.PI * 30}`}
+                strokeDashoffset={`${2 * Math.PI * 30 * (1 - holdProgress / 100)}`}
+                className="transition-all duration-100 ease-out drop-shadow-sm"
+              />
+            </svg>
+          </div>
         )}
         
         <div className="relative flex items-center justify-center z-10">
-          <Phone className="h-8 w-8" />
-          <Shield className="absolute -top-1 -right-1 h-4 w-4" />
+          <Phone className="h-6 w-6" />
+          <Shield className="absolute -top-1 -right-1 h-3 w-3" />
         </div>
       </Button>
 

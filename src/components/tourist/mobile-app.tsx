@@ -17,13 +17,16 @@ import { GeoFenceAlert } from "@/components/tourist/geo-fence-alert";
 import { LocationHistory } from "@/components/tourist/location-history";
 import { SettingsScreen } from "@/components/tourist/settings-screen";
 import { VoiceRecorder } from "@/components/tourist/voice-recorder";
-import { User, Menu, Shield, Heart, Car, Calendar, MapPin, Phone, Settings, History, QrCode } from "lucide-react";
+import { SafetyTipsScreen } from "@/components/tourist/safety-tips-screen";
+import { ExploreScreen } from "@/components/tourist/explore-screen";
+import { EventsScreen } from "@/components/tourist/events-screen";
+import { User, Menu, Shield, Heart, Car, Calendar, MapPin, Phone, Settings, History, QrCode, Info } from "lucide-react";
 import buddhaHero from "@/assets/buddha-hero.jpg";
 
 const MobileApp = () => {
   const [currentView, setCurrentView] = useState<
     "language" | "splash" | "privacy" | "registration" | "home" | "profile" | 
-    "digitalId" | "history" | "settings" | "panicFlow"
+    "digitalId" | "history" | "settings" | "panicFlow" | "safetyTips" | "explore" | "events"
   >("language");
   const [geoFenceAlert, setGeoFenceAlert] = useState<{
     type: string;
@@ -74,6 +77,18 @@ const MobileApp = () => {
   
   if (currentView === "settings") {
     return <SettingsScreen onBack={() => setCurrentView("home")} />;
+  }
+
+  if (currentView === "safetyTips") {
+    return <SafetyTipsScreen onBack={() => setCurrentView("home")} />;
+  }
+
+  if (currentView === "explore") {
+    return <ExploreScreen onBack={() => setCurrentView("home")} />;
+  }
+
+  if (currentView === "events") {
+    return <EventsScreen onBack={() => setCurrentView("home")} />;
   }
   
   if (currentView === "panicFlow") {
@@ -189,7 +204,7 @@ const MobileApp = () => {
               icon={Shield} 
               label="Safety Tips" 
               variant="success" 
-              onClick={() => console.log("Safety Tips tapped")}
+              onClick={() => setCurrentView("safetyTips")}
               className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-deep-forest/50 transition-all duration-200"
             />
             <FeatureTile 
@@ -210,14 +225,14 @@ const MobileApp = () => {
               icon={Calendar} 
               label="Events" 
               variant="warning" 
-              onClick={() => console.log("Events & Tickets tapped")}
+              onClick={() => setCurrentView("events")}
               className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-amber-warning/50 transition-all duration-200"
             />
             <FeatureTile 
               icon={MapPin} 
               label="Explore" 
               variant="primary" 
-              onClick={() => console.log("Explore tapped")}
+              onClick={() => setCurrentView("explore")}
               className="touch-target bg-gradient-surface border-neutral-gray/20 hover:border-deep-forest/50 transition-all duration-200"
             />
             <FeatureTile 

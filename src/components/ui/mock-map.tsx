@@ -1,112 +1,124 @@
 import { useState, useEffect } from "react";
-import { MapPin, Locate, Layers, Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-interface MockMarker {
-  id: string;
-  label: string;
-  lat: number;
-  lng: number;
-  type: "city" | "tourist" | "poi";
-}
-
-const mockMarkers: MockMarker[] = [
-  { id: "m1", label: "Guwahati", lat: 26.1445, lng: 91.7362, type: "city" },
-  { id: "m2", label: "Shillong", lat: 25.5788, lng: 91.8933, type: "city" },
-  { id: "m3", label: "Tawang", lat: 27.5860, lng: 92.1910, type: "city" },
-  { id: "tourist_123", label: "You", lat: 26.0, lng: 92.0, type: "tourist" },
-];
+import { MapPin, Navigation, Shield, AlertTriangle } from "lucide-react";
 
 const MockMap = () => {
-  const [activeMarker, setActiveMarker] = useState<string | null>(null);
-  const [demoTime, setDemoTime] = useState(new Date());
+  const [currentLocation] = useState({ lat: 26.2006, lng: 92.9376 });
+  
+  // Mock tourist locations with real Northeast India coordinates
+  const touristLocations = [
+    { id: 1, lat: 26.2006, lng: 92.9376, name: "Guwahati", count: 45, status: "safe" },
+    { id: 2, lat: 25.5788, lng: 91.8933, name: "Shillong", count: 32, status: "safe" },
+    { id: 3, lat: 27.0238, lng: 93.6053, name: "Itanagar", count: 18, status: "warning" },
+    { id: 4, lat: 27.533, lng: 88.5122, name: "Gangtok", count: 25, status: "safe" }
+  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDemoTime(new Date());
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  const geoFenceZones = [
+    { id: 1, lat: 26.15, lng: 92.85, radius: 15, type: "landslide", severity: "high" },
+    { id: 2, lat: 25.55, lng: 91.85, radius: 10, type: "flood", severity: "medium" }
+  ];
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "safe": return "text-soft-green";
+      case "warning": return "text-amber-warning";
+      case "danger": return "text-danger";
+      default: return "text-neutral-gray";
+    }
+  };
+
+  const getSeverityColor = (severity: string) => {
+    switch (severity) {
+      case "high": return "border-danger bg-danger/20";
+      case "medium": return "border-amber-warning bg-amber-warning/20";
+      case "low": return "border-soft-green bg-soft-green/20";
+      default: return "border-neutral-gray bg-neutral-gray/20";
+    }
+  };
 
   return (
-    <div className="h-64 bg-gradient-to-br from-deep-forest/20 to-soft-green/10 relative overflow-hidden border border-neutral-gray/20 rounded-lg">
-      {/* Demo Badge */}
-      <Badge variant="secondary" className="absolute top-3 left-3 z-10 text-xs bg-surface/80 text-pure-white border-neutral-gray/20">
-        DEMO
-      </Badge>
-
-      {/* Map Controls */}
-      <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
-        <Button variant="secondary" size="icon" className="h-8 w-8 bg-surface/80 hover:bg-surface border-neutral-gray/20">
-          <Locate className="h-4 w-4 text-pure-white" />
-        </Button>
-        <Button variant="secondary" size="icon" className="h-8 w-8 bg-surface/80 hover:bg-surface border-neutral-gray/20">
-          <Layers className="h-4 w-4 text-pure-white" />
-        </Button>
-      </div>
-
-      {/* Mock Map Background */}
+    <div className="relative w-full h-64 bg-gradient-to-br from-deep-forest via-primary-dark to-card rounded-lg overflow-hidden">
+      {/* Map Background Pattern */}
       <div className="absolute inset-0 opacity-30">
-        <svg viewBox="0 0 400 300" className="w-full h-full">
-          {/* Terrain paths with dark theme colors */}
-          <path d="M0,150 Q100,100 200,120 T400,140" stroke="hsl(var(--deep-forest))" strokeWidth="2" fill="none" opacity="0.4" />
-          <path d="M0,200 Q150,160 300,180 T400,190" stroke="hsl(var(--soft-green))" strokeWidth="1.5" fill="none" opacity="0.3" />
-          <path d="M50,250 Q200,220 350,240" stroke="hsl(var(--neutral-gray))" strokeWidth="1" fill="none" opacity="0.2" />
-        </svg>
+        <div className="w-full h-full bg-gradient-mesh"></div>
+      </div>
+      
+      {/* Current Location */}
+      <div 
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20"
+      >
+        <div className="relative">
+          <div className="w-4 h-4 bg-soft-green rounded-full border-2 border-pure-white shadow-lg animate-pulse"></div>
+          <div className="absolute -inset-2 border-2 border-soft-green/50 rounded-full animate-ping"></div>
+          <div className="absolute -inset-4 border border-soft-green/30 rounded-full animate-pulse"></div>
+        </div>
       </div>
 
-      {/* Mock Markers */}
-      {mockMarkers.map((marker) => (
+      {/* Tourist Locations */}
+      {touristLocations.map((location, index) => (
         <div
-          key={marker.id}
-          className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:scale-110 ${
-            activeMarker === marker.id ? "z-20" : "z-10"
-          }`}
+          key={location.id}
+          className="absolute z-10 animate-fade-in"
           style={{
-            left: `${((marker.lng - 90) / 4) * 100 + 30}%`,
-            top: `${((28 - marker.lat) / 4) * 100 + 30}%`,
+            left: `${20 + (index * 15)}%`,
+            top: `${15 + (index * 12)}%`,
+            animationDelay: `${index * 200}ms`
           }}
-          onClick={() => setActiveMarker(activeMarker === marker.id ? null : marker.id)}
         >
-          <div className={`w-7 h-7 rounded-full flex items-center justify-center shadow-lg border-2 ${
-            marker.type === "tourist" 
-              ? "bg-deep-forest border-soft-green text-pure-white animate-pulse" 
-              : marker.type === "city"
-              ? "bg-soft-green border-pure-white text-primary-dark"
-              : "bg-surface border-neutral-gray text-pure-white"
-          }`}>
-            <MapPin className="h-4 w-4" />
-          </div>
-          
-          {/* Marker Popup */}
-          {activeMarker === marker.id && (
-            <div className="absolute bottom-9 left-1/2 transform -translate-x-1/2 bg-card/95 backdrop-blur-sm rounded-lg px-3 py-2 text-xs whitespace-nowrap shadow-lg border border-neutral-gray/20">
-              <div className="text-center">
-                <p className="font-medium text-pure-white">{marker.label}</p>
-                {marker.type === "tourist" && (
-                  <p className="text-neutral-gray">Last seen: {demoTime.toLocaleTimeString()}</p>
-                )}
-              </div>
+          <div className="flex flex-col items-center">
+            <div className={`p-1.5 rounded-full bg-card/80 backdrop-blur-sm border ${getStatusColor(location.status)} hover:scale-110 transition-transform duration-200`}>
+              <MapPin className={`h-3 w-3 ${getStatusColor(location.status)}`} />
             </div>
-          )}
+            <Badge 
+              variant="secondary" 
+              className="mt-1 text-xs bg-card/90 text-pure-white border-neutral-gray/30 backdrop-blur-sm"
+            >
+              {location.count}
+            </Badge>
+          </div>
         </div>
       ))}
 
-      {/* Safety Indicators */}
-      <div className="absolute bottom-4 left-4">
-        <div className="flex items-center gap-2 text-xs bg-card/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-neutral-gray/20">
-          <div className="w-3 h-3 rounded-full bg-deep-forest animate-pulse"></div>
-          <span className="text-pure-white font-medium">Low Risk Zone</span>
+      {/* Geo-fence Zones */}
+      {geoFenceZones.map((zone, index) => (
+        <div
+          key={zone.id}
+          className={`absolute rounded-full border-2 border-dashed opacity-60 animate-pulse ${getSeverityColor(zone.severity)}`}
+          style={{
+            left: `${30 + (index * 25)}%`,
+            top: `${25 + (index * 20)}%`,
+            width: `${zone.radius * 2}px`,
+            height: `${zone.radius * 2}px`,
+            animationDelay: `${index * 300}ms`
+          }}
+        >
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <AlertTriangle className="h-3 w-3 text-current" />
+          </div>
         </div>
+      ))}
+
+      {/* Map Legend */}
+      <div className="absolute bottom-2 left-2 flex gap-2 z-30">
+        <Badge variant="secondary" className="text-xs bg-card/90 text-pure-white border-neutral-gray/30 backdrop-blur-sm">
+          <Navigation className="h-2.5 w-2.5 mr-1" />
+          Live
+        </Badge>
+        <Badge variant="secondary" className="text-xs bg-card/90 text-soft-green border-soft-green/30 backdrop-blur-sm">
+          <Shield className="h-2.5 w-2.5 mr-1" />
+          Safe Zones
+        </Badge>
       </div>
 
-      {/* Safety Score */}
-      <div className="absolute bottom-4 right-4 bg-card/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-neutral-gray/20">
-        <div className="flex items-center gap-2">
-          <Heart className="h-4 w-4 text-deep-forest" />
-          <span className="text-small font-medium text-pure-white">Safety: 92%</span>
-        </div>
+      {/* Accuracy Circle */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+        <div className="w-16 h-16 border border-soft-green/30 rounded-full animate-pulse"></div>
+      </div>
+
+      {/* OpenStreetMap Attribution */}
+      <div className="absolute bottom-1 right-2 text-xs text-neutral-gray/60 bg-card/50 px-1 rounded backdrop-blur-sm">
+        OSM
       </div>
     </div>
   );
