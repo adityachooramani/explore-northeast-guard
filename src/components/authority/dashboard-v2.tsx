@@ -28,6 +28,8 @@ import {
   Search,
   Plus
 } from "lucide-react";
+import { MessagingPage } from "@/components/authority/messaging/MessagingPage";
+import { DashboardButton as MessagingButton } from "@/components/authority/messaging/DashboardButton";
 
 const incidents = [
   {
@@ -151,12 +153,19 @@ const AuthorityDashboardV2 = () => {
   const [activeTab, setActiveTab] = useState("incidents");
   const [activeNavItem, setActiveNavItem] = useState("live-map");
   const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
+  const [showMessaging, setShowMessaging] = useState(false);
 
   const handleMarkerSelect = (markerId: string) => {
     setSelectedMarkerId(markerId);
   };
 
   const renderMainContent = () => {
+    if (showMessaging) {
+      return (
+        <MessagingPage onBackToDashboard={() => setShowMessaging(false)} />
+      );
+    }
+
     switch (activeNavItem) {
       case "live-map":
         return (
@@ -213,6 +222,7 @@ const AuthorityDashboardV2 = () => {
                 Last sync: {new Date().toLocaleTimeString()}
               </div>
             </div>
+            <MessagingButton onClick={() => setShowMessaging(true)} />
             <Button variant="outline" size="sm">
               <Bell className="h-4 w-4 mr-2" />
               Alerts ({demoStats.alertsToday})
