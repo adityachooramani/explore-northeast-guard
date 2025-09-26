@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { StatusChip } from "@/components/ui/status-chip";
+import { OSMMap, type OSMMarker } from "@/components/ui/osm-map";
 
 interface MapMarker {
   id: string;
@@ -108,6 +109,16 @@ const InteractiveMap = ({
   const touristCount = demoMarkers.filter(m => m.type === "tourist").length;
   const emergencyCount = demoMarkers.filter(m => m.type === "tourist" && m.status === "emergency").length;
   const warningCount = demoMarkers.filter(m => m.type === "tourist" && m.status === "warning").length;
+
+  const center: [number, number] = [26.2006, 92.9376];
+
+  const osmMarkers: OSMMarker[] = demoMarkers.map((m) => ({
+    id: m.id,
+    position: [m.lat, m.lng],
+    label: `${m.label}${m.status ? ` (${m.status})` : ""}`,
+    details: m.details,
+    radiusMeters: m.type === "risk_zone" && m.radius_km ? m.radius_km * 1000 : undefined,
+  }));
 
   return (
     <div className="h-full bg-gradient-to-br from-primary/5 to-accent/10 relative overflow-hidden">
@@ -242,70 +253,9 @@ const InteractiveMap = ({
         </Card>
       )}
 
-      {/* Mock Map Background */}
-      <div className="absolute inset-0 opacity-20">
-        <svg viewBox="0 0 800 600" className="w-full h-full">
-          {/* Terrain paths representing Northeast India geography */}
-          <path d="M100,300 Q200,250 400,270 T700,280" stroke="hsl(var(--primary))" strokeWidth="3" fill="none" opacity="0.4" />
-          <path d="M50,400 Q250,350 500,380 T750,390" stroke="hsl(var(--secondary-green))" strokeWidth="2" fill="none" opacity="0.3" />
-          <path d="M150,200 Q350,150 550,180 T750,200" stroke="hsl(var(--accent))" strokeWidth="1.5" fill="none" opacity="0.2" />
-          
-          {/* Risk zone overlays */}
-          {layerStates.riskZones && demoMarkers
-            .filter(m => m.type === "risk_zone")
-            .map(zone => (
-              <circle
-                key={`zone-${zone.id}`}
-                cx={((zone.lng - 90) / 5) * 800 + 100}
-                cy={((28 - zone.lat) / 5) * 600 + 100}
-                r={zone.radius_km ? zone.radius_km * 3 : 30}
-                fill={zone.status === "restricted" ? "rgba(229,57,53,0.1)" : "rgba(255,183,77,0.1)"}
-                stroke={zone.status === "restricted" ? "hsl(var(--danger))" : "hsl(var(--warning))"}
-                strokeWidth="2"
-                strokeDasharray="5,5"
-                opacity="0.6"
-              />
-            ))
-          }
-          
-          {/* Enhanced Heatmap overlay */}
-          {layerStates.heatmap && (
-            <>
-              {/* Low density areas */}
-              <circle cx="400" cy="300" r="100" fill="var(--gradient-heatmap-low)" />
-              <circle cx="200" cy="200" r="80" fill="var(--gradient-heatmap-low)" />
-              
-              {/* Medium density areas */}
-              <circle cx="400" cy="300" r="60" fill="var(--gradient-heatmap-mid)" />
-              <circle cx="600" cy="400" r="70" fill="var(--gradient-heatmap-mid)" />
-              
-              {/* High density areas */}
-              <circle cx="400" cy="300" r="30" fill="var(--gradient-heatmap-high)" />
-              <circle cx="150" cy="150" r="25" fill="var(--gradient-heatmap-high)" />
-            </>
-          )}
-          
-          {/* Weather Layer */}
-          {layerStates.weather && (
-            <>
-              <circle cx="300" cy="200" r="40" fill="rgba(33,150,243,0.2)" stroke="hsl(var(--info))" strokeWidth="1" strokeDasharray="3,3" />
-              <text x="300" y="205" textAnchor="middle" className="text-xs fill-current">🌧️ 22°C</text>
-              
-              <circle cx="500" cy="350" r="35" fill="rgba(255,152,0,0.2)" stroke="hsl(var(--warning))" strokeWidth="1" strokeDasharray="3,3" />
-              <text x="500" y="355" textAnchor="middle" className="text-xs fill-current">☀️ 28°C</text>
-            </>
-          )}
-          
-          {/* Terrain Features */}
-          {layerStates.terrain && (
-            <>
-              <path d="M50,500 Q150,450 250,470 T450,480" stroke="hsl(var(--primary))" strokeWidth="4" fill="none" opacity="0.6" />
-              <path d="M100,350 Q200,300 350,320 T550,330" stroke="hsl(var(--accent))" strokeWidth="3" fill="none" opacity="0.4" />
-              <circle cx="150" cy="180" r="8" fill="hsl(var(--primary))" opacity="0.7" />
-              <text x="150" y="170" textAnchor="middle" className="text-xs fill-current opacity-70">🏔️</text>
-            </>
-          )}
-        </svg>
+      {/* OSM Map */}
+      <div className="absolute inset-0">
+        <OSMMap center={center} zoom={6} markers={osmMarkers} />
       </div>
 
       {/* Tourist Markers */}
